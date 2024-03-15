@@ -98,6 +98,10 @@ env_base.__class__.disable_warnings = methods.disable_warnings
 env_base["x86_libtheora_opt_gcc"] = False
 env_base["x86_libtheora_opt_vc"] = False
 
+# idk
+env_base.editor_sources = [ ]
+
+
 # avoid issues when building with different versions of python out of the same directory
 env_base.SConsignFile(".sconsign{0}.dblite".format(pickle.HIGHEST_PROTOCOL))
 
@@ -713,6 +717,13 @@ if selected_platform in platform_list:
     SConscript("scene/SCsub")
     if env["tools"]:
         SConscript("editor/SCsub")
+    else:
+        SConscript("editor/collada/SCsub")
+        SConscript("editor/import/SCsub")
+
+        lib = env.add_library("editor", env.editor_sources)
+        env.Prepend(LIBS=[lib])
+
     SConscript("drivers/SCsub")
 
     SConscript("platform/SCsub")
